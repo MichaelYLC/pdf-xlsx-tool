@@ -1,0 +1,46 @@
+name: Test Windows Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas PyPDF2 pdfplumber openpyxl pyinstaller
+    
+    - name: Test PyInstaller
+      run: |
+        pyinstaller --version
+        echo "PyInstaller is working correctly"
+    
+    - name: Build executable
+      run: |
+        pyinstaller pdf_converter.spec
+    
+    - name: Verify executable
+      run: |
+        if (Test-Path "dist/PDF_to_Excel_Converter.exe") {
+          echo "✅ Executable created successfully"
+          Get-Item "dist/PDF_to_Excel_Converter.exe" | Select-Object Name, Length
+        } else {
+          echo "❌ Executable not found"
+          exit 1
+        }
+    
+    - name: Upload Windows executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: PDF_to_Excel_Converter_Windows_Test
+        path: dist/PDF_to_Excel_Converter.exe
