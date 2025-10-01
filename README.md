@@ -21,6 +21,25 @@ A powerful Python tool to convert PDF quiz files to Excel format with multiple l
 
 ## 🛠️ Installation
 
+### Windows Users (Easy Setup)
+
+**Option 1: Automatic Setup (Recommended)**
+1. Download the repository
+2. Double-click `setup_windows.bat`
+3. Follow the on-screen instructions
+
+**Option 2: Standalone Executable**
+1. Download `PDF_to_Excel_Converter.exe` from releases
+2. No Python installation required!
+3. Double-click to run
+
+**Option 3: Windows Installer**
+1. Download `PDF_to_Excel_Converter_Setup.exe` from releases
+2. Run the installer as administrator
+3. Follow the installation wizard
+
+### Manual Installation (All Platforms)
+
 1. Clone the repository:
 ```bash
 git clone <repository-url>
@@ -29,10 +48,39 @@ cd pdf-xlsx-tool
 
 2. Install dependencies:
 ```bash
+# Windows
+pip install pandas PyPDF2 pdfplumber openpyxl
+
+# macOS/Linux
 pip3 install pandas PyPDF2 pdfplumber openpyxl
 ```
 
 ## 🎯 Quick Start
+
+### Windows Users
+
+**Using the Executable (.exe)**
+```cmd
+# Convert PDF to Excel (Chinese - default)
+PDF_to_Excel_Converter.exe your_file.pdf
+
+# Convert with specific language
+PDF_to_Excel_Converter.exe your_file.pdf -l en
+
+# Batch convert all PDFs
+PDF_to_Excel_Converter.exe . --batch -l en
+```
+
+**Using Python (if installed)**
+```cmd
+# Convert PDF to Excel (Chinese - default)
+python pdf_to_excel.py your_file.pdf
+
+# Convert with specific language
+python pdf_to_excel.py your_file.pdf -l en
+```
+
+### macOS/Linux Users
 
 ### Basic Usage
 ```bash
@@ -139,6 +187,35 @@ This tool successfully converts:
 - Technical training materials
 - Multi-language quiz files
 - Educational content
+
+---
+
+## 🪟 Windows Distribution Guide
+
+### For Developers
+
+**Building Windows Executable:**
+1. Install PyInstaller: `pip install pyinstaller`
+2. Run: `build_windows.bat`
+3. Find executable in `dist\PDF_to_Excel_Converter.exe`
+
+**Creating Windows Installer:**
+1. Install NSIS (Nullsoft Scriptable Install System)
+2. Run: `makensis installer.nsi`
+3. Find installer: `PDF_to_Excel_Converter_Setup.exe`
+
+### Distribution Options
+
+1. **Standalone Executable** - Single .exe file, no dependencies
+2. **Windows Installer** - Professional installation with shortcuts
+3. **Batch Setup** - Automatic Python environment setup
+4. **Source Code** - For advanced users
+
+### Windows Requirements
+
+- Windows 7 or later
+- For standalone executable: No additional requirements
+- For Python version: Python 3.6+ required
 
 ---
 

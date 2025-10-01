@@ -1,0 +1,58 @@
+name: Build Windows Executable
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas PyPDF2 pdfplumber openpyxl pyinstaller
+    
+    - name: Build executable
+      run: |
+        pyinstaller pdf_converter.spec
+    
+    - name: Upload Windows executable
+      uses: actions/upload-artifact@v3
+      with:
+        name: PDF_to_Excel_Converter_Windows
+        path: dist/PDF_to_Excel_Converter.exe
+    
+    - name: Create Release
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/PDF_to_Excel_Converter.exe
+        tag_name: v${{ github.run_number }}
+        name: Windows Executable v${{ github.run_number }}
+        body: |
+          Windows executable for PDF to Excel Converter
+          
+          ## Usage
+          ```cmd
+          PDF_to_Excel_Converter.exe your_file.pdf
+          PDF_to_Excel_Converter.exe your_file.pdf -l en
+          ```
+          
+          ## Features
+          - Multi-language support (Chinese, English, Hindi, Thai, Vietnamese)
+          - Batch processing
+          - No Python installation required
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

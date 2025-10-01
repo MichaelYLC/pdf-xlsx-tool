@@ -1,0 +1,21 @@
+# Dockerfile for Windows Python environment
+FROM python:3.11-windowsservercore
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install pyinstaller
+
+# Copy application files
+COPY . .
+
+# Build the executable
+RUN pyinstaller pdf_converter.spec
+
+# The executable will be in dist/PDF_to_Excel_Converter.exe
+CMD ["cmd"]
