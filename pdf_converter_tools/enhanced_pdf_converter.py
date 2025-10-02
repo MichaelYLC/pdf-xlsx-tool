@@ -18,11 +18,13 @@ class QuizQuestion:
     def __init__(self):
         self.question_number = ""
         self.answer = ""
-        self.question_text = ""
-        self.options = {"A": "", "B": "", "C": "", "D": ""}
+        self.question_text_zh = ""  # Chinese question text
+        self.question_text_en = ""  # English question text
+        self.options_zh = {"A": "", "B": "", "C": "", "D": ""}  # Chinese options
+        self.options_en = {"A": "", "B": "", "C": "", "D": ""}  # English options
 
 def extract_quiz_questions_from_pdf(pdf_path):
-    """Extract quiz questions from PDF with proper parsing"""
+    """Extract quiz questions from PDF with bilingual parsing"""
     questions = []
     
     with pdfplumber.open(pdf_path) as pdf:
@@ -47,14 +49,68 @@ def extract_quiz_questions_from_pdf(pdf_path):
         answer_map = {"1": "A", "2": "B", "3": "C", "4": "D"}
         question.answer = answer_map[answer_number]
         
-        # Process the question content
-        process_question_content(question, question_content)
+        # Process the bilingual question content
+        process_bilingual_question_content(question, question_content)
         questions.append(question)
     
     return questions
 
-def process_question_content(question, content):
-    """Process the question content to separate question text from options"""
+def process_bilingual_question_content(question, content):
+    """Process bilingual question content to separate Chinese and English parts"""
+    # Split content into Chinese and English parts
+    # Look for English question pattern (usually starts with "Which of the following" or similar)
+    english_patterns = [
+        r'(Which of the following.*?)(?=\d+\.\s*\([1-4]\)|$)',
+        r'(What.*?)(?=\d+\.\s*\([1-4]\)|$)',
+        r'(How.*?)(?=\d+\.\s*\([1-4]\)|$)',
+        r'(When.*?)(?=\d+\.\s*\([1-4]\)|$)',
+        r'(Where.*?)(?=\d+\.\s*\([1-4]\)|$)'
+    ]
+    
+    chinese_content = content
+    english_content = ""
+    
+    # Try to find English content
+    for pattern in english_patterns:
+        match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
+        if match:
+            english_content = match.group(1).strip()
+            # Remove English content from Chinese content
+            chinese_content = content.replace(english_content, "").strip()
+            break
+    
+    # If no English pattern found, try to split by looking for common English words
+    if not english_content:
+        # Look for lines that contain English words (not Chinese characters)
+        lines = content.split('\n')
+        chinese_lines = []
+        english_lines = []
+        
+        for line in lines:
+            line = line.strip()
+            if line:
+                # Check if line contains mostly English characters
+                english_chars = sum(1 for c in line if c.isascii() and c.isalpha())
+                chinese_chars = sum(1 for c in line if '\u4e00' <= c <= '\u9fff')
+                
+                if english_chars > chinese_chars and english_chars > 10:
+                    english_lines.append(line)
+                else:
+                    chinese_lines.append(line)
+        
+        chinese_content = '\n'.join(chinese_lines).strip()
+        english_content = '\n'.join(english_lines).strip()
+    
+    # Process Chinese content
+    if chinese_content:
+        process_question_content_language(question, chinese_content, 'zh')
+    
+    # Process English content
+    if english_content:
+        process_question_content_language(question, english_content, 'en')
+
+def process_question_content_language(question, content, language):
+    """Process question content for a specific language"""
     # Find the first option symbol
     first_option_pos = len(content)
     for symbol in ['①', '②', '③', '④']:
@@ -64,16 +120,26 @@ def process_question_content(question, content):
     
     if first_option_pos < len(content):
         # Separate question from options
-        question.question_text = content[:first_option_pos].strip()
+        question_text = content[:first_option_pos].strip()
         options_content = content[first_option_pos:].strip()
         
+        # Store question text
+        if language == 'zh':
+            question.question_text_zh = question_text
+        else:
+            question.question_text_en = question_text
+        
         # Process options
-        process_options(question, options_content)
+        process_options_language(question, options_content, language)
     else:
-        question.question_text = content
+        # No options found, just store the question text
+        if language == 'zh':
+            question.question_text_zh = content
+        else:
+            question.question_text_en = content
 
-def process_options(question, options_content):
-    """Process options content to extract individual options"""
+def process_options_language(question, options_content, language):
+    """Process options content to extract individual options for a specific language"""
     # Split by option symbols
     option_symbols = ['①', '②', '③', '④']
     option_map = {"①": "A", "②": "B", "③": "C", "④": "D"}
@@ -102,7 +168,10 @@ def process_options(question, options_content):
         option_text = re.sub(r'^[①②③④]\s*', '', option_text).strip()
         
         if option_text:
-            question.options[option_map[symbol]] = option_text
+            if language == 'zh':
+                question.options_zh[option_map[symbol]] = option_text
+            else:
+                question.options_en[option_map[symbol]] = option_text
 
 def create_excel_with_quiz_structure(questions, output_path, target_lang=None):
     """Create Excel file with the same structure as the reference file"""
@@ -138,21 +207,19 @@ def create_excel_with_quiz_structure(questions, output_path, target_lang=None):
         ws.cell(row=row, column=1, value=question.question_number)  # 題號
         ws.cell(row=row, column=2, value=question.answer)  # 答案
         
-        # Fill in the specified language or default to Chinese
-        if target_lang and target_lang in lang_columns:
-            # Fill the specified language
-            ws.cell(row=row, column=lang_columns[target_lang]['question'], value=question.question_text)
-            ws.cell(row=row, column=lang_columns[target_lang]['A'], value=question.options['A'])
-            ws.cell(row=row, column=lang_columns[target_lang]['B'], value=question.options['B'])
-            ws.cell(row=row, column=lang_columns[target_lang]['C'], value=question.options['C'])
-            ws.cell(row=row, column=lang_columns[target_lang]['D'], value=question.options['D'])
-        else:
-            # Default: fill Chinese columns
-            ws.cell(row=row, column=3, value=question.question_text)  # 題目_zh
-            ws.cell(row=row, column=8, value=question.options['A'])  # 選項A_zh
-            ws.cell(row=row, column=13, value=question.options['B'])  # 選項B_zh
-            ws.cell(row=row, column=18, value=question.options['C'])  # 選項C_zh
-            ws.cell(row=row, column=23, value=question.options['D'])  # 選項D_zh
+        # Always fill Chinese columns (zh)
+        ws.cell(row=row, column=3, value=question.question_text_zh)  # 題目_zh
+        ws.cell(row=row, column=8, value=question.options_zh['A'])  # 選項A_zh
+        ws.cell(row=row, column=13, value=question.options_zh['B'])  # 選項B_zh
+        ws.cell(row=row, column=18, value=question.options_zh['C'])  # 選項C_zh
+        ws.cell(row=row, column=23, value=question.options_zh['D'])  # 選項D_zh
+        
+        # Fill English columns (en) if available
+        ws.cell(row=row, column=4, value=question.question_text_en)  # 題目_en
+        ws.cell(row=row, column=9, value=question.options_en['A'])  # 選項A_en
+        ws.cell(row=row, column=14, value=question.options_en['B'])  # 選項B_en
+        ws.cell(row=row, column=19, value=question.options_en['C'])  # 選項C_en
+        ws.cell(row=row, column=24, value=question.options_en['D'])  # 選項D_en
     
     # Auto-adjust column widths
     for column in ws.columns:
@@ -239,8 +306,8 @@ def main():
 if __name__ == "__main__":
     # If no command line arguments, run with default files
     if len(sys.argv) == 1:
-        pdf_path = "/Users/michael/Desktop/Projects/PracticePro/堆高機.pdf"
-        output_path = "/Users/michael/Desktop/Projects/PracticePro/堆高機_converted_enhanced.xlsx"
+        pdf_path = "/Users/michael/Desktop/Projects/PracticePro/堆高機-菲律賓-英文.pdf"
+        output_path = "/Users/michael/Desktop/Projects/PracticePro/pdf-xlsx-tool/converted_examples/堆高機-菲律賓-英文_converted_bilingual.xlsx"
         
         print("=== Converting Default PDF File ===")
         questions = extract_quiz_questions_from_pdf(pdf_path)
@@ -252,9 +319,14 @@ if __name__ == "__main__":
             for i, q in enumerate(questions[:3]):
                 print(f"\nQuestion {q.question_number}:")
                 print(f"  Answer: {q.answer}")
-                print(f"  Text: {q.question_text}")
-                print(f"  Options:")
-                for opt, text in q.options.items():
+                print(f"  Chinese Text: {q.question_text_zh}")
+                print(f"  English Text: {q.question_text_en}")
+                print(f"  Chinese Options:")
+                for opt, text in q.options_zh.items():
+                    if text:
+                        print(f"    {opt}: {text}")
+                print(f"  English Options:")
+                for opt, text in q.options_en.items():
                     if text:
                         print(f"    {opt}: {text}")
             
