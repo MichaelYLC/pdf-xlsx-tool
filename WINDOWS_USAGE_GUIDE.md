@@ -201,3 +201,4 @@ Output file: your_file_converted_en.xlsx
 5. **Open** the generated Excel file
 
 **That's it! No Python installation needed!** 🚀
+
