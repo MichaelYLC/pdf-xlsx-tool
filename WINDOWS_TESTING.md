@@ -49,7 +49,7 @@
 
 **Core Features:**
 - [ ] Convert single PDF file
-- [ ] Convert with different language options (zh, en, hi, th, vi)
+- [ ] Convert with different language options (zh, en, id, th, vi)
 - [ ] Batch convert multiple PDFs
 - [ ] Custom output directory
 - [ ] Error handling for invalid files

@@ -31,7 +31,7 @@ Write-Host ""
 Write-Host "Available languages:" -ForegroundColor Yellow
 Write-Host "  zh - Chinese (default)" -ForegroundColor White
 Write-Host "  en - English" -ForegroundColor White
-Write-Host "  hi - Hindi" -ForegroundColor White
+Write-Host "  id - Indonesian" -ForegroundColor White
 Write-Host "  th - Thai" -ForegroundColor White
 Write-Host "  vi - Vietnamese" -ForegroundColor White
 Write-Host ""

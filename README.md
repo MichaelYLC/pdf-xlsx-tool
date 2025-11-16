@@ -4,7 +4,7 @@ A powerful Python tool to convert PDF quiz files to Excel format with multiple l
 
 ## 🚀 Features
 
-- **Multi-language Support**: Chinese, English, Hindi, Thai, Vietnamese
+- **Multi-language Support**: Chinese, English, Indonesian, Thai, Vietnamese
 - **Batch Processing**: Convert multiple PDF files at once
 - **Custom Output**: Specify output directories
 - **Proper Formatting**: Matches reference Excel structure
@@ -94,7 +94,7 @@ python3 pdf_to_excel.py your_file.pdf -l en
 ### Language Options
 - `zh` - Chinese (default)
 - `en` - English
-- `hi` - Hindi
+- `id` - Indonesian
 - `th` - Thai
 - `vi` - Vietnamese
 
@@ -136,7 +136,7 @@ The Excel file contains:
 - **答案** - Answer (A, B, C, or D)
 - **題目_zh** - Question in Chinese
 - **題目_en** - Question in English
-- **題目_hi** - Question in Hindi
+- **題目_id** - Question in Indonesian
 - **題目_th** - Question in Thai
 - **題目_vi** - Question in Vietnamese
 - **選項A_zh, 選項B_zh, 選項C_zh, 選項D_zh** - Options in Chinese

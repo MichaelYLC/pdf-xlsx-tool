@@ -8,7 +8,7 @@ The enhanced converter now supports specifying which language column to fill aut
 
 - `zh` - Chinese (default)
 - `en` - English  
-- `hi` - Hindi
+- `id` - Indonesian
 - `th` - Thai
 - `vi` - Vietnamese
 
@@ -34,9 +34,9 @@ python3 enhanced_pdf_converter.py your_file.pdf -l vi
 python3 enhanced_pdf_converter.py your_file.pdf -l th
 ```
 
-### **5. Convert with Hindi:**
+### **5. Convert with Indonesian:**
 ```bash
-python3 enhanced_pdf_converter.py your_file.pdf -l hi
+python3 enhanced_pdf_converter.py your_file.pdf -l id
 ```
 
 ### **6. Convert with custom output directory:**
@@ -67,8 +67,8 @@ python3 enhanced_pdf_converter.py . --batch -l en
 - Fills: 題目_th, 選項A_th, 選項B_th, 選項C_th, 選項D_th
 - Other language columns remain empty
 
-### **Hindi (hi):**
-- Fills: 題目_hi, 選項A_hi, 選項B_hi, 選項C_hi, 選項D_hi
+### **Indonesian (id):**
+- Fills: 題目_id, 選項A_id, 選項B_id, 選項C_id, 選項D_id
 - Other language columns remain empty
 
 ## 🎯 **Practical Examples**
@@ -98,7 +98,7 @@ The converter creates files with language suffixes:
 - `filename_converted_en.xlsx` (English)
 - `filename_converted_vi.xlsx` (Vietnamese)
 - `filename_converted_th.xlsx` (Thai)
-- `filename_converted_hi.xlsx` (Hindi)
+- `filename_converted_id.xlsx` (Indonesian)
 
 ## ✅ **Benefits**
 
@@ -113,7 +113,7 @@ The converter creates files with language suffixes:
 - `input` - PDF file or directory containing PDF files
 - `-o, --output` - Output directory (default: same as input)
 - `--batch` - Process all PDF files in directory
-- `-l, --lang` - Target language (zh, en, hi, th, vi)
+- `-l, --lang` - Target language (zh, en, id, th, vi)
 - `-h, --help` - Show help message
 
 ## 🎉 **Ready to Use!**

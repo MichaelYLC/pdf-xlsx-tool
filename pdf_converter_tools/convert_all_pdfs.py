@@ -22,7 +22,7 @@ def main():
         
         print(f"\nNext steps for each file:")
         print("1. Open the Excel file")
-        print("2. Fill in translations for other languages (English, Hindi, Thai, Vietnamese)")
+        print("2. Fill in translations for other languages (English, Indonesian, Thai, Vietnamese)")
         print("3. Add images if needed")
         print("4. Review and adjust formatting")
     else:

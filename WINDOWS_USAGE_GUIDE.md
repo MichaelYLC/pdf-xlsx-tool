@@ -60,8 +60,8 @@ PDF_to_Excel_Converter.exe your_file.pdf -l en
 # Convert with English language
 PDF_to_Excel_Converter.exe your_file.pdf -l en
 
-# Convert with Hindi language
-PDF_to_Excel_Converter.exe your_file.pdf -l hi
+# Convert with Indonesian language
+PDF_to_Excel_Converter.exe your_file.pdf -l id
 
 # Convert with Thai language
 PDF_to_Excel_Converter.exe your_file.pdf -l th
@@ -88,7 +88,7 @@ PDF_to_Excel_Converter.exe --help
 |------|----------|---------|
 | `zh` | Chinese (default) | `-l zh` |
 | `en` | English | `-l en` |
-| `hi` | Hindi | `-l hi` |
+| `id` | Indonesian | `-l id` |
 | `th` | Thai | `-l th` |
 | `vi` | Vietnamese | `-l vi` |
 
@@ -126,7 +126,7 @@ Error: PDF file not found
 → Check the file path and name
 
 Error: Invalid language code
-→ Use: zh, en, hi, th, or vi
+→ Use: zh, en, id, th, or vi
 
 Error: Output directory not writable
 → Choose a different output location

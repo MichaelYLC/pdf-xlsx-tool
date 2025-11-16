@@ -29,7 +29,7 @@ echo.
 echo Available languages:
 echo   zh - Chinese (default)
 echo   en - English
-echo   hi - Hindi
+echo   id - Indonesian
 echo   th - Thai
 echo   vi - Vietnamese
 echo.

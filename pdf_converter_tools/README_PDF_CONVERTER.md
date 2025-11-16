@@ -8,7 +8,7 @@ This tool converts PDF quiz files to Excel format with multiple language support
 - Handles multi-line questions and options
 - Creates Excel files with the same structure as your reference file
 - Supports batch processing of multiple PDF files
-- Includes columns for Chinese, English, Hindi, Thai, and Vietnamese translations
+- Includes columns for Chinese, English, Indonesian, Thai, and Vietnamese translations
 - Auto-adjusts column widths for better readability
 
 ## Files
@@ -46,12 +46,12 @@ The Excel file will have the following structure:
 - **答案** - Answer (A, B, C, or D)
 - **題目_zh** - Question text in Chinese
 - **題目_en** - Question text in English (empty, for manual translation)
-- **題目_hi** - Question text in Hindi (empty, for manual translation)
+- **題目_id** - Question text in Indonesian (empty, for manual translation)
 - **題目_th** - Question text in Thai (empty, for manual translation)
 - **題目_vi** - Question text in Vietnamese (empty, for manual translation)
 - **選項A_zh** - Option A in Chinese
 - **選項A_en** - Option A in English (empty, for manual translation)
-- **選項A_hi** - Option A in Hindi (empty, for manual translation)
+- **選項A_id** - Option A in Indonesian (empty, for manual translation)
 - **選項A_th** - Option A in Thai (empty, for manual translation)
 - **選項A_vi** - Option A in Vietnamese (empty, for manual translation)
 - Similar columns for options B, C, and D
@@ -60,7 +60,7 @@ The Excel file will have the following structure:
 ## Next Steps After Conversion
 
 1. **Open the Excel file** in your preferred spreadsheet application
-2. **Fill in translations** for other languages (English, Hindi, Thai, Vietnamese)
+2. **Fill in translations** for other languages (English, Indonesian, Thai, Vietnamese)
 3. **Add images** if needed in the image columns
 4. **Review and adjust formatting** as necessary
 5. **Save the file** when complete
