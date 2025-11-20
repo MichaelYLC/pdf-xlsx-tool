@@ -29,6 +29,25 @@ class QuizQuestion:
         self.options_th = {"A": "", "B": "", "C": "", "D": ""}  # Thai options
         self.options_vi = {"A": "", "B": "", "C": "", "D": ""}  # Vietnamese options
 
+def normalize_thai_text(text):
+    """Normalize Thai text by removing incorrect spaces between Thai characters"""
+    # Thai character range: U+0E00 to U+0E7F
+    # Remove spaces that are between Thai characters (including combining characters)
+    # Pattern: Thai char + space + Thai char -> Thai char + Thai char
+    import unicodedata
+    
+    # Use regex to find and remove spaces between Thai characters
+    # Match: Thai char + one or more spaces + Thai char
+    thai_char_pattern = r'[\u0E00-\u0E7F]'
+    # Replace: Thai char + space(s) + Thai char -> Thai char + Thai char
+    pattern = f'({thai_char_pattern})\\s+({thai_char_pattern})'
+    
+    # Keep replacing until no more matches (in case of multiple spaces)
+    while re.search(pattern, text):
+        text = re.sub(pattern, r'\1\2', text)
+    
+    return text
+
 def extract_quiz_questions_from_pdf(pdf_path, target_lang=None):
     """Extract quiz questions from PDF with bilingual parsing"""
     questions = []
@@ -38,6 +57,8 @@ def extract_quiz_questions_from_pdf(pdf_path, target_lang=None):
         for page in pdf.pages:
             text = page.extract_text()
             if text:
+                # Normalize Thai text to fix spacing issues
+                text = normalize_thai_text(text)
                 full_text += text + "\n"
     
     # Split by question numbers to get individual questions
