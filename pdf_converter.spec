@@ -7,14 +7,13 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[
-        ('pdf_converter_tools', 'pdf_converter_tools'),
-        ('converted_examples', 'converted_examples'),
-        ('15100堆高機操作(程式檔)-中+印+越+英.xlsx', '.'),
+        ('pdf_xlsx_tool', 'pdf_xlsx_tool'),
+        ('examples', 'examples'),
     ],
     hiddenimports=[
-        'pandas',
-        'PyPDF2',
         'pdfplumber',
+        'pdf_xlsx_tool',
+        'pdf_xlsx_tool.converter',
         'openpyxl',
         'openpyxl.workbook',
         'openpyxl.worksheet',

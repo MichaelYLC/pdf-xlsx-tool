@@ -6,15 +6,12 @@ Installs required dependencies
 
 import subprocess
 import sys
-import os
 
 def install_requirements():
     """Install required Python packages"""
     requirements = [
-        'pandas',
-        'PyPDF2', 
         'pdfplumber',
-        'openpyxl'
+        'openpyxl',
     ]
     
     print("Installing required packages...")

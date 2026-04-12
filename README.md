@@ -14,8 +14,6 @@ A powerful Python tool to convert PDF quiz files to Excel format with multiple l
 ## 📋 Requirements
 
 - Python 3.6+
-- pandas
-- PyPDF2
 - pdfplumber
 - openpyxl
 
@@ -48,12 +46,9 @@ cd pdf-xlsx-tool
 
 2. Install dependencies:
 ```bash
-# Windows
-pip install pandas PyPDF2 pdfplumber openpyxl
-
-# macOS/Linux
-pip3 install pandas PyPDF2 pdfplumber openpyxl
+pip install -r requirements.txt
 ```
+(On macOS/Linux you can use `pip3` instead of `pip` if that is how Python is set up.)
 
 ## 🎯 Quick Start
 
@@ -114,19 +109,20 @@ python3 pdf_to_excel.py --help
 
 ```
 pdf-xlsx-tool/
-├── pdf_to_excel.py              # Main converter script
-├── pdf_converter_tools/         # Converter tools and documentation
-│   ├── enhanced_pdf_converter.py    # Main converter engine
-│   ├── convert_all_pdfs.py          # Batch converter
-│   ├── README_PDF_CONVERTER.md      # Detailed documentation
-│   └── USAGE_GUIDE.md               # Usage guide with examples
-├── converted_examples/          # Example converted files
-│   ├── 堆高機_converted_en.xlsx     # English example
-│   ├── 堆高機_converted_th.xlsx     # Thai example
-│   └── 堆高機_converted_vi.xlsx     # Vietnamese example
-├── 堆高機.pdf                   # Sample PDF file
-├── 15100堆高機操作(程式檔)-中+印+越+英.xlsx  # Reference Excel file
-└── README.md                    # This file
+├── pdf_to_excel.py           # CLI entry (run from repo root)
+├── pdf_xlsx_tool/            # Python package
+│   ├── __main__.py           # python -m pdf_xlsx_tool
+│   └── converter.py          # PDF → Excel engine
+├── scripts/
+│   └── convert_all_pdfs.py   # Convert every *.pdf in a folder
+├── examples/
+│   ├── pdfs/                 # Sample PDFs for testing
+│   ├── converted/            # Example Excel outputs
+│   └── reference/            # Reference workbook (column layout)
+├── docs/                     # Guides (usage, Windows build, etc.)
+├── requirements.txt
+├── pdf_converter.spec        # PyInstaller configuration
+└── README.md
 ```
 
 ## 📊 Output Format
@@ -156,9 +152,11 @@ The tool has been tested with:
 
 ## 📖 Documentation
 
-- **Main Documentation**: `pdf_converter_tools/README_PDF_CONVERTER.md`
-- **Usage Guide**: `pdf_converter_tools/USAGE_GUIDE.md`
-- **Examples**: Check `converted_examples/` directory
+- **Converter details**: `docs/pdf_converter.md`
+- **Usage & language options**: `docs/usage.md`
+- **Windows build**: `docs/windows_build.md`
+- **Windows usage / testing**: `docs/windows_usage.md`, `docs/windows_testing.md`
+- **Sample outputs**: `examples/converted/`
 
 ## 🤝 Contributing
 

@@ -2,7 +2,7 @@
 
 ## 🎯 **New Feature: Language Support**
 
-The enhanced converter now supports specifying which language column to fill automatically!
+The converter lets you choose which non-Chinese language column to fill from the bilingual PDF.
 
 ## 📋 **Available Languages**
 
@@ -16,37 +16,37 @@ The enhanced converter now supports specifying which language column to fill aut
 
 ### **1. Convert with Chinese (default):**
 ```bash
-python3 enhanced_pdf_converter.py your_file.pdf
+python3 pdf_to_excel.py your_file.pdf
 ```
 
 ### **2. Convert with English:**
 ```bash
-python3 enhanced_pdf_converter.py your_file.pdf -l en
+python3 pdf_to_excel.py your_file.pdf -l en
 ```
 
 ### **3. Convert with Vietnamese:**
 ```bash
-python3 enhanced_pdf_converter.py your_file.pdf -l vi
+python3 pdf_to_excel.py your_file.pdf -l vi
 ```
 
 ### **4. Convert with Thai:**
 ```bash
-python3 enhanced_pdf_converter.py your_file.pdf -l th
+python3 pdf_to_excel.py your_file.pdf -l th
 ```
 
 ### **5. Convert with Indonesian:**
 ```bash
-python3 enhanced_pdf_converter.py your_file.pdf -l id
+python3 pdf_to_excel.py your_file.pdf -l id
 ```
 
 ### **6. Convert with custom output directory:**
 ```bash
-python3 enhanced_pdf_converter.py your_file.pdf -l en -o /path/to/output
+python3 pdf_to_excel.py your_file.pdf -l en -o /path/to/output
 ```
 
 ### **7. Batch convert all PDFs with English:**
 ```bash
-python3 enhanced_pdf_converter.py . --batch -l en
+python3 pdf_to_excel.py . --batch -l en
 ```
 
 ## 📊 **What Happens with Each Language Option**
@@ -75,19 +75,19 @@ python3 enhanced_pdf_converter.py . --batch -l en
 
 ### **For English-speaking users:**
 ```bash
-python3 enhanced_pdf_converter.py forklift_manual.pdf -l en
+python3 pdf_to_excel.py forklift_manual.pdf -l en
 ```
 This creates `forklift_manual_converted_en.xlsx` with English columns filled.
 
 ### **For Vietnamese users:**
 ```bash
-python3 enhanced_pdf_converter.py forklift_manual.pdf -l vi
+python3 pdf_to_excel.py forklift_manual.pdf -l vi
 ```
 This creates `forklift_manual_converted_vi.xlsx` with Vietnamese columns filled.
 
 ### **For batch processing:**
 ```bash
-python3 enhanced_pdf_converter.py /path/to/pdfs --batch -l en
+python3 pdf_to_excel.py /path/to/pdfs --batch -l en
 ```
 This converts all PDFs in the directory with English columns filled.
 
@@ -118,4 +118,4 @@ The converter creates files with language suffixes:
 
 ## 🎉 **Ready to Use!**
 
-The enhanced converter is now ready with full language support. Choose the language that works best for your workflow!
+Choose the language option that matches the second language in your PDF.

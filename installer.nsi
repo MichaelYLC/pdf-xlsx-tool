@@ -44,9 +44,8 @@ section "install"
     file "dist\PDF_to_Excel_Converter.exe"
     
     ; Copy supporting files
-    file /r "pdf_converter_tools"
-    file /r "converted_examples"
-    file "15100堆高機操作(程式檔)-中+印+越+英.xlsx"
+    file /r "pdf_xlsx_tool"
+    file /r "examples"
     file "README.md"
     
     ; Create desktop shortcut
@@ -82,10 +81,9 @@ section "uninstall"
     delete "$INSTDIR\PDF_to_Excel_Converter.exe"
     delete "$INSTDIR\uninstall.exe"
     delete "$INSTDIR\README.md"
-    delete "$INSTDIR\15100堆高機操作(程式檔)-中+印+越+英.xlsx"
     
-    rmDir /r "$INSTDIR\pdf_converter_tools"
-    rmDir /r "$INSTDIR\converted_examples"
+    rmDir /r "$INSTDIR\pdf_xlsx_tool"
+    rmDir /r "$INSTDIR\examples"
     
     delete "$DESKTOP\${APPNAME}.lnk"
     delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"

@@ -13,30 +13,36 @@ This tool converts PDF quiz files to Excel format with multiple language support
 
 ## Files
 
-- `comprehensive_pdf_to_excel_converter.py` - Main converter script
-- `convert_all_pdfs.py` - Simple script to convert all PDFs in current directory
-- `堆高機_converted_comprehensive.xlsx` - Example output file
+- `pdf_xlsx_tool/converter.py` — conversion engine (imported by the CLI)
+- `pdf_to_excel.py` — main CLI entry (repository root)
+- `scripts/convert_all_pdfs.py` — convert every `*.pdf` in a folder
+- `examples/converted/` — sample Excel outputs
 
 ## Usage
 
 ### Convert a single PDF file:
 ```bash
-python3 comprehensive_pdf_to_excel_converter.py your_file.pdf
+python3 pdf_to_excel.py your_file.pdf
 ```
 
 ### Convert all PDF files in a directory:
 ```bash
-python3 comprehensive_pdf_to_excel_converter.py /path/to/pdf/directory --batch
+python3 pdf_to_excel.py /path/to/pdf/directory --batch
 ```
 
 ### Convert all PDF files in current directory:
 ```bash
-python3 convert_all_pdfs.py
+python3 scripts/convert_all_pdfs.py
 ```
 
 ### Specify output directory:
 ```bash
-python3 comprehensive_pdf_to_excel_converter.py your_file.pdf -o /path/to/output
+python3 pdf_to_excel.py your_file.pdf -o /path/to/output
+```
+
+### Module form (from repository root):
+```bash
+python3 -m pdf_xlsx_tool your_file.pdf -l en
 ```
 
 ## Output Format
@@ -68,14 +74,12 @@ The Excel file will have the following structure:
 ## Requirements
 
 - Python 3.6+
-- pandas
-- PyPDF2
 - pdfplumber
 - openpyxl
 
 Install requirements:
 ```bash
-pip3 install pandas PyPDF2 pdfplumber openpyxl
+pip3 install -r requirements.txt
 ```
 
 ## Troubleshooting

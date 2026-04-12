@@ -4,13 +4,10 @@ Enhanced PDF to Excel Converter with Language Support
 Allows specifying which language column to fill automatically
 """
 
-import pandas as pd
 import pdfplumber
-import openpyxl
 from openpyxl import Workbook
 import re
 import sys
-import os
 from pathlib import Path
 import argparse
 
@@ -374,7 +371,7 @@ def create_excel_with_quiz_structure(questions, output_path, target_lang=None):
             try:
                 if cell.value and len(str(cell.value)) > max_length:
                     max_length = len(str(cell.value))
-            except:
+            except (TypeError, ValueError):
                 pass
         adjusted_width = min(max_length + 2, 50)
         ws.column_dimensions[column_letter].width = adjusted_width
@@ -449,35 +446,4 @@ def main():
             print("4. Review and adjust formatting")
 
 if __name__ == "__main__":
-    # If no command line arguments, run with default files
-    if len(sys.argv) == 1:
-        pdf_path = "/Users/michael/Desktop/Projects/PracticePro/堆高機-菲律賓-英文.pdf"
-        output_path = "/Users/michael/Desktop/Projects/PracticePro/pdf-xlsx-tool/converted_examples/堆高機-菲律賓-英文_converted_bilingual.xlsx"
-        
-        print("=== Converting Default PDF File ===")
-        questions = extract_quiz_questions_from_pdf(pdf_path)
-        
-        if questions:
-            print(f"Found {len(questions)} questions")
-            
-            # Show first few questions as preview
-            for i, q in enumerate(questions[:3]):
-                print(f"\nQuestion {q.question_number}:")
-                print(f"  Answer: {q.answer}")
-                print(f"  Chinese Text: {q.question_text_zh}")
-                print(f"  English Text: {q.question_text_en}")
-                print(f"  Chinese Options:")
-                for opt, text in q.options_zh.items():
-                    if text:
-                        print(f"    {opt}: {text}")
-                print(f"  English Options:")
-                for opt, text in q.options_en.items():
-                    if text:
-                        print(f"    {opt}: {text}")
-            
-            create_excel_with_quiz_structure(questions, output_path)
-            print(f"Output file: {output_path}")
-        else:
-            print("No questions found in the PDF")
-    else:
-        main()
+    main()

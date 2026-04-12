@@ -34,7 +34,7 @@ echo Installing required packages...
 echo.
 
 python -m pip install --upgrade pip
-python -m pip install pandas PyPDF2 pdfplumber openpyxl
+python -m pip install pdfplumber openpyxl
 
 if %errorlevel% neq 0 (
     echo ERROR: Failed to install required packages
